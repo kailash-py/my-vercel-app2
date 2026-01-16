@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import json
 import numpy as np
 from statistics import mean
+from pathlib import Path
 
 app = FastAPI()
 
@@ -14,8 +15,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load telemetry data
-with open("telemetry.json", "r") as f:
+# ✅ Correct, serverless-safe path
+BASE_DIR = Path(__file__).resolve().parent
+telemetry_path = BASE_DIR / "telemetry.json"
+
+with open(telemetry_path, "r") as f:
     telemetry = json.load(f)
 
 @app.post("/analytics")
