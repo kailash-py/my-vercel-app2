@@ -15,7 +15,7 @@ app.add_middleware(
 )
 
 # Load telemetry data
-with open("api/telemetry.json", "r") as f:
+with open("telemetry.json", "r") as f:
     telemetry = json.load(f)
 
 @app.post("/analytics")
