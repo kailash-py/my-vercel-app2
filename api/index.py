@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+import json
 import numpy as np
 from statistics import mean
 
@@ -14,17 +15,8 @@ app.add_middleware(
 )
 
 # Load telemetry data
-telemetry = [
-    {"region": "amer", "latency_ms": 120, "uptime": 0.99},
-    {"region": "amer", "latency_ms": 150, "uptime": 0.98},
-    {"region": "amer", "latency_ms": 200, "uptime": 1.0},
-    {"region": "apac", "latency_ms": 100, "uptime": 0.97},
-    {"region": "apac", "latency_ms": 160, "uptime": 0.95},
-    {"region": "apac", "latency_ms": 180, "uptime": 0.96},
-    {"region": "emea", "latency_ms": 140, "uptime": 0.98},
-    {"region": "emea", "latency_ms": 170, "uptime": 0.99},
-    {"region": "emea", "latency_ms": 190, "uptime": 0.97}
-]
+with open("telemetry.json", "r") as f:
+    telemetry = json.load(f)
 
 @app.post("/analytics")
 async def analytics(request: Request):
